@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-07T08:09:14.508Z</updated>
+  <updated>2019-04-07T09:36:53.823Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,28 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>PySpider</title>
+    <title>PySpider安装中的问题(mac)</title>
     <link href="http://yoursite.com/2019/04/07/PySpider/"/>
     <id>http://yoursite.com/2019/04/07/PySpider/</id>
     <published>2019-04-07T07:57:50.000Z</published>
-    <updated>2019-04-07T08:09:14.508Z</updated>
+    <updated>2019-04-07T09:36:53.823Z</updated>
     
-    <content type="html"><![CDATA[<p>安装过程(基础过程没什么操作)：</p><pre><code>1.mac 打开 Shell2.pip install pyspider</code></pre><p> 使用过程：</p><pre><code>3.不使用pycharm的情况下(包括pycharm与shell是连接的):打开mac的shell界面 3.使用pycharm的情况(pycharm与shell不同版本):打开pycharm的terminal界面4.在终端界面(不论哪种情况统称终端)输入pyspider all    4.1问题1：          ImportError:             pycurl: libcurl link-time ssl backend (***) is different from compile-time ssl backend (***)             这种情况是mac独有的(pycurl与libcurl版本冲突)            根据第一个括号中内容的不同:                nss：                    pip uninstall pycurl                     export PYCURL_SSL_LIBRARY=nss                    pip install pycurl                openssl：                    pip uninstall pycurl                     export PYCURL_SSL_LIBRARY=openssl                    pip install pycurl    4.2问题2：            Could not create web server listening on port 2555        这种情况在shell中直接输入lsof -i:2555查看2555端口是否已经被使用(其实这种情况基本就是被phantomjs占用了)        显示出类似：             COMMAND   PID    USER      FD   TYPE  DEVICE SIZE/OFF       NODE        NAME            phantomjs  815  thekernel   12u  IPv4 0xa481aab9e34a6609     0t0   TCP *:25555 (LISTEN)     在终端再输入kill -9 815(自己对应的PID)</code></pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="安装过程："><a href="#安装过程：" class="headerlink" title="安装过程："></a>安装过程：</h2><h3 id="emsp-nbsp-mac-打开-Shell"><a href="#emsp-nbsp-mac-打开-Shell" class="headerlink" title="&emsp;&nbsp;  mac 打开 Shell"></a>&emsp;&nbsp;  mac 打开 Shell</h3><h3 id="emsp-nbsp-pip-install-pyspider"><a href="#emsp-nbsp-pip-install-pyspider" class="headerlink" title="&emsp;&nbsp;  pip install pyspider"></a>&emsp;&nbsp;  pip install pyspider</h3><h2 id="使用过程："><a href="#使用过程：" class="headerlink" title="使用过程："></a>使用过程：</h2><h3 id="emsp-nbsp-打开mac的terminal界面"><a href="#emsp-nbsp-打开mac的terminal界面" class="headerlink" title="&emsp;&nbsp;  打开mac的terminal界面"></a>&emsp;&nbsp;  打开mac的terminal界面</h3><h3 id="emsp-nbsp-在终端界面-输入"><a href="#emsp-nbsp-在终端界面-输入" class="headerlink" title="&emsp;&nbsp;  在终端界面, 输入"></a>&emsp;&nbsp;  在终端界面, 输入</h3><p>&emsp;&emsp;<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyspider <span class="keyword">all</span></span><br></pre></td></tr></table></figure></p><h4 id="emsp-nbsp-问题1："><a href="#emsp-nbsp-问题1：" class="headerlink" title="&emsp;&nbsp; 问题1："></a>&emsp;&nbsp; 问题1：</h4><p>&emsp;&emsp;&nbsp; ImportError: pycurl: libcurl link-time ssl backend is different from compile-time ssl backend </p><p>&emsp;&emsp;&nbsp; 这种情况是mac独有的（pycurl与libcurl版本冲突）  </p><p>&emsp;&emsp;&nbsp; 根据第一个括号中内容的不同:  </p><p>&emsp;&emsp;&emsp; nss：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pycurl </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PYCURL_SSL_LIBRARY</span>=nss</span><br><span class="line">pip install pycurl</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;&emsp; openssl：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pycurl </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PYCURL_SSL_LIBRARY</span>=openssl</span><br><span class="line">pip install pycurl</span><br></pre></td></tr></table></figure><h4 id="emsp-nbsp-问题2："><a href="#emsp-nbsp-问题2：" class="headerlink" title="&emsp;&nbsp; 问题2："></a>&emsp;&nbsp; 问题2：</h4><p>&emsp;&emsp;&nbsp; Could not create web server listening on port xxx</p><p>&emsp;&emsp;&nbsp; 这种情况在shell中直接输入lsof -i:xxx 查看xxx端口是否已经被使用</p><pre><code>若显示出类似:     COMMAND   PID    USER     FD   TYPE  DEVICE SIZE/OFF    ---   phantomjs  815  thekernel  12u  IPv4 0xa481aab9e34a6609  ---</code></pre><p>&emsp;&emsp;&nbsp; 在终端输入:<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill <span class="number">-9</span> <span class="number">815</span>(自己对应的PID)</span><br></pre></td></tr></table></figure></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;安装过程(基础过程没什么操作)：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1.mac 打开 Shell
-
-2.pip install pyspider
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; 使用过程：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;3.不使用pycharm的情况下(包括pycharm与s
+        &lt;h2 id=&quot;安装过程：&quot;&gt;&lt;a href=&quot;#安装过程：&quot; class=&quot;headerlink&quot; title=&quot;安装过程：&quot;&gt;&lt;/a&gt;安装过程：&lt;/h2&gt;&lt;h3 id=&quot;emsp-nbsp-mac-打开-Shell&quot;&gt;&lt;a href=&quot;#emsp-nbsp-mac-打开-Sh
       
     
     </summary>
     
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="pyspider" scheme="http://yoursite.com/tags/pyspider/"/>
+    
+      <category term="mac" scheme="http://yoursite.com/tags/mac/"/>
     
   </entry>
   

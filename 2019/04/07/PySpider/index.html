@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>PySpider | 尤梨洲</title>
+    <title>PySpider安装中的问题(mac) | 尤梨洲</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content>
+    <meta name="keywords" content="python,爬虫,pyspider,mac">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/style.css?v=1.4.1">
@@ -177,7 +177,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>PySpider</span>
+            <span>PySpider安装中的问题(mac)</span>
             
         </div>
         
@@ -190,13 +190,15 @@
 <header class="content-header post-header">
     <img src="/img/banner.jpeg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">PySpider</h1>
+        <h1 class="title">PySpider安装中的问题(mac)</h1>
         <h5 class="subtitle">
             
                 <time datetime="2019-04-07T07:57:50.000Z" itemprop="datePublished" class="page-time">
   2019-04-07
 </time>
 
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/python/">python</a></li></ul>
 
             
         </h5>
@@ -223,11 +225,13 @@
 <div class="container body-wrap">
     <article id="post-PySpider" class="post-article article-type-post" itemprop="blogPost">
       <div class="post-card">
-          <h1 class="post-card-title">PySpider</h1>
+          <h1 class="post-card-title">PySpider安装中的问题(mac)</h1>
           <div class="post-meta">
               <time class="post-time" title="2019-04-07 15:57:50" datetime="2019-04-07T07:57:50.000Z" itemprop="datePublished">2019-04-07</time>
 
               
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/python/">python</a></li></ul>
+
 
 
               
@@ -239,59 +243,30 @@
           </div>
           <div class="post-content" id="post-content" itemprop="postContent">
               
-              <p>安装过程(基础过程没什么操作)：</p>
-<pre><code>1.mac 打开 Shell
+              <h2 id="安装过程："><a href="#安装过程：" class="headerlink" title="安装过程："></a>安装过程：</h2><h3 id="emsp-nbsp-mac-打开-Shell"><a href="#emsp-nbsp-mac-打开-Shell" class="headerlink" title="&emsp;&nbsp;  mac 打开 Shell"></a>&emsp;&nbsp;  mac 打开 Shell</h3><h3 id="emsp-nbsp-pip-install-pyspider"><a href="#emsp-nbsp-pip-install-pyspider" class="headerlink" title="&emsp;&nbsp;  pip install pyspider"></a>&emsp;&nbsp;  pip install pyspider</h3><h2 id="使用过程："><a href="#使用过程：" class="headerlink" title="使用过程："></a>使用过程：</h2><h3 id="emsp-nbsp-打开mac的terminal界面"><a href="#emsp-nbsp-打开mac的terminal界面" class="headerlink" title="&emsp;&nbsp;  打开mac的terminal界面"></a>&emsp;&nbsp;  打开mac的terminal界面</h3><h3 id="emsp-nbsp-在终端界面-输入"><a href="#emsp-nbsp-在终端界面-输入" class="headerlink" title="&emsp;&nbsp;  在终端界面, 输入"></a>&emsp;&nbsp;  在终端界面, 输入</h3><p>&emsp;&emsp;<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyspider <span class="keyword">all</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="emsp-nbsp-问题1："><a href="#emsp-nbsp-问题1：" class="headerlink" title="&emsp;&nbsp; 问题1："></a>&emsp;&nbsp; 问题1：</h4><p>&emsp;&emsp;&nbsp; ImportError: pycurl: libcurl link-time ssl backend is different from compile-time ssl backend </p>
+<p>&emsp;&emsp;&nbsp; 这种情况是mac独有的（pycurl与libcurl版本冲突）  </p>
+<p>&emsp;&emsp;&nbsp; 根据第一个括号中内容的不同:  </p>
+<p>&emsp;&emsp;&emsp; nss：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pycurl </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PYCURL_SSL_LIBRARY</span>=nss</span><br><span class="line">pip install pycurl</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;&emsp; openssl：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pycurl </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PYCURL_SSL_LIBRARY</span>=openssl</span><br><span class="line">pip install pycurl</span><br></pre></td></tr></table></figure>
+<h4 id="emsp-nbsp-问题2："><a href="#emsp-nbsp-问题2：" class="headerlink" title="&emsp;&nbsp; 问题2："></a>&emsp;&nbsp; 问题2：</h4><p>&emsp;&emsp;&nbsp; Could not create web server listening on port xxx</p>
+<p>&emsp;&emsp;&nbsp; 这种情况在shell中直接输入lsof -i:xxx 查看xxx端口是否已经被使用</p>
+<pre><code>若显示出类似: 
 
-2.pip install pyspider
-</code></pre><p> 使用过程：</p>
-<pre><code>3.不使用pycharm的情况下(包括pycharm与shell是连接的):打开mac的shell界面 
+    COMMAND   PID    USER     FD   TYPE  DEVICE SIZE/OFF    ---
 
-3.使用pycharm的情况(pycharm与shell不同版本):打开pycharm的terminal界面
+   phantomjs  815  thekernel  12u  IPv4 0xa481aab9e34a6609  ---
+</code></pre><p>&emsp;&emsp;&nbsp; 在终端输入:<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill <span class="number">-9</span> <span class="number">815</span>(自己对应的PID)</span><br></pre></td></tr></table></figure></p>
 
-4.在终端界面(不论哪种情况统称终端)输入pyspider all
-
-    4.1问题1：
-
-          ImportError: 
-            pycurl: libcurl link-time ssl backend (***) is different from compile-time ssl backend (***) 
-
-            这种情况是mac独有的(pycurl与libcurl版本冲突)
-
-            根据第一个括号中内容的不同:
-
-                nss：
-
-                    pip uninstall pycurl 
-                    export PYCURL_SSL_LIBRARY=nss
-                    pip install pycurl
-
-                openssl：
-
-                    pip uninstall pycurl 
-                    export PYCURL_SSL_LIBRARY=openssl
-                    pip install pycurl
-
-    4.2问题2：
-
-            Could not create web server listening on port 2555
-
-        这种情况在shell中直接输入lsof -i:2555查看2555端口是否已经被使用(其实这种情况基本就是被phantomjs占用了)
-
-        显示出类似：
-
-             COMMAND   PID    USER      FD   TYPE  DEVICE SIZE/OFF       NODE        NAME
-
-            phantomjs  815  thekernel   12u  IPv4 0xa481aab9e34a6609     0t0   TCP *:25555 (LISTEN)
-
-     在终端再输入kill -9 815(自己对应的PID)
-</code></pre>
           </div>
           
 <blockquote class="post-copyright">
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-04-07T08:09:14.508Z" itemprop="dateUpdated">2019-04-07 16:09:14</time>
+    最后更新时间：<time datetime="2019-04-07T09:36:53.823Z" itemprop="dateUpdated">2019-04-07 17:36:53</time>
 </span><br>
 
 
@@ -316,6 +291,8 @@
           
           <div class="post-footer">
               
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pyspider/">pyspider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
               <div class="page-share-wrap">
     
 
@@ -323,7 +300,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider安装中的问题(mac)》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -335,7 +312,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider安装中的问题(mac)》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -374,6 +351,14 @@
 
       
       
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装过程："><span class="post-toc-number">1.</span> <span class="post-toc-text">安装过程：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#emsp-nbsp-mac-打开-Shell"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">    mac 打开 Shell</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#emsp-nbsp-pip-install-pyspider"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">    pip install pyspider</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用过程："><span class="post-toc-number">2.</span> <span class="post-toc-text">使用过程：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#emsp-nbsp-打开mac的terminal界面"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">    打开mac的terminal界面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#emsp-nbsp-在终端界面-输入"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">    在终端界面, 输入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-nbsp-问题1："><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">   问题1：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-nbsp-问题2："><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">   问题2：</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </div></div></aside>
+    
   </article>
   
       <div id="reward" class="page-modal reward-lay">
@@ -469,7 +454,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider安装中的问题(mac)》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -481,7 +466,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/07/PySpider/&title=《PySpider安装中的问题(mac)》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
