@@ -3,6 +3,59 @@
   
     
     <entry>
+      <title><![CDATA[PySpider]]></title>
+      <url>/2019/04/07/PySpider/</url>
+      <content type="html"><![CDATA[<p>安装过程(基础过程没什么操作)：</p>
+<pre><code>1.mac 打开 Shell
+
+2.pip install pyspider
+</code></pre><p> 使用过程：</p>
+<pre><code>3.不使用pycharm的情况下(包括pycharm与shell是连接的):打开mac的shell界面 
+
+3.使用pycharm的情况(pycharm与shell不同版本):打开pycharm的terminal界面
+
+4.在终端界面(不论哪种情况统称终端)输入pyspider all
+
+    4.1问题1：
+
+          ImportError: 
+            pycurl: libcurl link-time ssl backend (***) is different from compile-time ssl backend (***) 
+
+            这种情况是mac独有的(pycurl与libcurl版本冲突)
+
+            根据第一个括号中内容的不同:
+
+                nss：
+
+                    pip uninstall pycurl 
+                    export PYCURL_SSL_LIBRARY=nss
+                    pip install pycurl
+
+                openssl：
+
+                    pip uninstall pycurl 
+                    export PYCURL_SSL_LIBRARY=openssl
+                    pip install pycurl
+
+    4.2问题2：
+
+            Could not create web server listening on port 2555
+
+        这种情况在shell中直接输入lsof -i:2555查看2555端口是否已经被使用(其实这种情况基本就是被phantomjs占用了)
+
+        显示出类似：
+
+             COMMAND   PID    USER      FD   TYPE  DEVICE SIZE/OFF       NODE        NAME
+
+            phantomjs  815  thekernel   12u  IPv4 0xa481aab9e34a6609     0t0   TCP *:25555 (LISTEN)
+
+     在终端再输入kill -9 815(自己对应的PID)
+</code></pre>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hello World]]></title>
       <url>/2019/04/06/hello-world/</url>
       <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
