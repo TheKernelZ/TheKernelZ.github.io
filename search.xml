@@ -3,6 +3,32 @@
   
     
     <entry>
+      <title><![CDATA[jieba库的使用]]></title>
+      <url>/2019/04/08/jieba/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> jieba </tag>
+            
+            <tag> 自动分词 </tag>
+            
+            <tag> 自然语言处理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[PySpider安装中的问题(mac)]]></title>
       <url>/2019/04/07/PySpider/</url>
       <content type="html"><![CDATA[<h2 id="安装过程："><a href="#安装过程：" class="headerlink" title="安装过程："></a>安装过程：</h2><h3 id="emsp-nbsp-mac-打开-Shell"><a href="#emsp-nbsp-mac-打开-Shell" class="headerlink" title="&emsp;&nbsp;  mac 打开 Shell"></a>&emsp;&nbsp;  mac 打开 Shell</h3><h3 id="emsp-nbsp-pip-install-pyspider"><a href="#emsp-nbsp-pip-install-pyspider" class="headerlink" title="&emsp;&nbsp;  pip install pyspider"></a>&emsp;&nbsp;  pip install pyspider</h3><h2 id="使用过程："><a href="#使用过程：" class="headerlink" title="使用过程："></a>使用过程：</h2><h3 id="emsp-nbsp-打开mac的terminal界面"><a href="#emsp-nbsp-打开mac的terminal界面" class="headerlink" title="&emsp;&nbsp;  打开mac的terminal界面"></a>&emsp;&nbsp;  打开mac的terminal界面</h3><h3 id="emsp-nbsp-在终端界面-输入"><a href="#emsp-nbsp-在终端界面-输入" class="headerlink" title="&emsp;&nbsp;  在终端界面, 输入"></a>&emsp;&nbsp;  在终端界面, 输入</h3><p>&emsp;&emsp;<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyspider <span class="keyword">all</span></span><br></pre></td></tr></table></figure></p>
