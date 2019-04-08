@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     
-    <title>jieba库的使用 | 尤梨洲</title>
+    <title>jieba库的使用 | TheKernelZ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="keywords" content="python,jieba,自动分词,自然语言处理">
@@ -243,23 +243,51 @@
           </div>
           <div class="post-content" id="post-content" itemprop="postContent">
               
-              
+              <h2 id="jieba库是python中常用的中文分词库"><a href="#jieba库是python中常用的中文分词库" class="headerlink" title="jieba库是python中常用的中文分词库"></a>jieba库是python中常用的中文分词库</h2><h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><pre><code>基于前缀词典实现高效的词图扫描，生成句子中含字所有可能成词情况所构成的有向无环图(DAG)
+采用了动态规划查找最大概率路径，找出基于词频的最大切分组和
+对于未登录词，采用了基于汉字成词能力的HMM模型，使用了Viterbi算法求解
+</code></pre><h3 id="1-分词"><a href="#1-分词" class="headerlink" title="1. 分词"></a>1. 分词</h3><h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jieba.cut(<span class="attribute">str</span>=<span class="string">''</span>, <span class="attribute">cut_all</span>=<span class="literal">False</span>, <span class="attribute">HMM</span>=<span class="literal">False</span>)</span><br><span class="line">jieba.lcut(<span class="attribute">str</span>=<span class="string">''</span>, <span class="attribute">cut_all</span>=<span class="literal">False</span>, <span class="attribute">HMM</span>=<span class="literal">False</span>)</span><br><span class="line">jieba.cut_for_search(<span class="attribute">str</span>=<span class="string">''</span>, <span class="attribute">cut_all</span>=<span class="literal">False</span>, <span class="attribute">HMM</span>=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="参数详解"><a href="#参数详解" class="headerlink" title="参数详解"></a>参数详解</h4><p>  &emsp;str字符串<br>  &emsp;cut_all是否采用全模式（倒序切，粒度细）<br>  &emsp;HMM是否使用HMM模型（设置为True可以发现新词）</p>
+<p>  &emsp;lcut 与 cut 之间的区别是返回的结果==&gt;lcut返回list, cut返回generator<br>  &emsp;cut_for_search 返回值是对长词进行分割，粒度比较细，适用于搜索引擎</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"></span><br><span class="line">seg_str = <span class="string">"我来到北京清华大学"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 精简模式（精确模式）</span></span><br><span class="line">easy = jieba.lcut(seg_str)</span><br><span class="line"><span class="builtin-name">print</span>(<span class="string">"/"</span>.join(easy))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全模式</span></span><br><span class="line">full = jieba.lcut(seg_str, <span class="attribute">cut_all</span>=<span class="literal">True</span>)</span><br><span class="line"><span class="builtin-name">print</span>(<span class="string">"/"</span>.join(full))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索引擎模式</span></span><br><span class="line">search = jieba.cut_for_search(seg_str)</span><br><span class="line"><span class="builtin-name">print</span>(<span class="string">"/"</span>.join(search))</span><br><span class="line"></span><br><span class="line"><span class="comment"># HMM=True，则模型有了发现新词的能力</span></span><br><span class="line">new_seg = <span class="string">"他来到了网易杭研大厦"</span></span><br><span class="line">result = jieba.lcut(new_seg)</span><br><span class="line">HMM_result = jieba.lcut(new_seg, <span class="attribute">HMM</span>=<span class="literal">True</span>)</span><br><span class="line"><span class="builtin-name">print</span>(<span class="string">"Normal_cut: "</span> + <span class="string">"/"</span>.join(result))</span><br><span class="line"><span class="builtin-name">print</span>(<span class="string">"HMM_cut: "</span> + <span class="string">"/"</span>.join(result))</span><br></pre></td></tr></table></figure>
+<h3 id="2-添加用户自定义字典"><a href="#2-添加用户自定义字典" class="headerlink" title="2. 添加用户自定义字典"></a>2. 添加用户自定义字典</h3><h4 id="原理很简单-直接上代码"><a href="#原理很简单-直接上代码" class="headerlink" title="原理很简单, 直接上代码"></a>原理很简单, 直接上代码</h4><p>  &emsp;用户字典如:<br>  <figure class="image-box">
+                <a rel="jieba库的使用" href="user_dict.png" title="user_dict图片" data-fancybox="images"><img src="user_dict.png" alt="user_dict图片" title class></a>
+                <p>user_dict图片</p>
+            </figure><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="title">jieba</span>.load_userdict(<span class="string">"dict/user_dict"</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">data</span> = [</span></span><br><span class="line">    <span class="string">"世界经济论坛也叫达沃斯论坛"</span>,</span><br><span class="line">    <span class="string">"The World Economic Forum is also called the Davos Forum."</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title">for</span> d <span class="keyword">in</span> <span class="class"><span class="keyword">data</span>:</span></span><br><span class="line">    result = jieba.lcut(d)</span><br><span class="line">    print(<span class="string">","</span>.join(result))</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-关键字提取"><a href="#3-关键字提取" class="headerlink" title="3. 关键字提取"></a>3. 关键字提取</h3><h4 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jieba<span class="selector-class">.analyse</span><span class="selector-class">.extract_tags</span>(sentence, topK=<span class="number">20</span>, withWeight=False, allowPOS=(<span class="string">'ns'</span>, <span class="string">'n'</span>, <span class="string">'vn'</span>, <span class="string">'v'</span>))</span><br><span class="line">jieba<span class="selector-class">.analyse</span><span class="selector-class">.textrank</span>(sentence, topK=<span class="number">20</span>, withWeight=False, allowPOS=(<span class="string">'ns'</span>, <span class="string">'n'</span>, <span class="string">'vn'</span>, <span class="string">'v'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="参数详解-1"><a href="#参数详解-1" class="headerlink" title="参数详解"></a>参数详解</h4><p>  &emsp;sentence：待提取的文本<br>  &emsp;topK：返回K个权重最大的关键词<br>  &emsp;withWeight：是否返回权重<br>  &emsp;allowPOS：是否仅包括指定词性的词</p>
+<p>  &emsp;extract_tags 基于 TF-IDF, textrand 基于 TextRank(具体算法可以自行Google)</p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import jieba.analyse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键词提取</span></span><br><span class="line">kWords = jieba.analyse.extract_tags(<span class="string">"此外，公司拟对全资子公司吉林欧亚置业有限公司增资4.3亿元，"</span> + </span><br><span class="line">                                    <span class="string">"增资后，吉林欧亚置业注册资本由7000万元增加到5亿元。吉林欧亚"</span> + </span><br><span class="line">                                    <span class="string">"置业主要经营范围为房地产开发及百货零售等业务。目前在建吉林欧"</span> + </span><br><span class="line">                                    <span class="string">"亚城市商业综合体项目。2013年，实现营业收入0万元，实现净利润-139.13万元。"</span>,</span><br><span class="line">                                    <span class="attribute">topK</span>=5, <span class="attribute">withWeight</span>=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word, weight <span class="keyword">in</span> kWords:</span><br><span class="line">    <span class="builtin-name">print</span>(word, <span class="string">":"</span>, weight)</span><br></pre></td></tr></table></figure>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><h4 id="词性标注"><a href="#词性标注" class="headerlink" title="词性标注"></a>词性标注</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 使用方法</span><br><span class="line"><span class="selector-tag">jieba</span><span class="selector-class">.posseg</span><span class="selector-class">.cut</span>(<span class="selector-tag">sentence</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例子</span></span><br><span class="line">import jieba.posseg <span class="keyword">as</span> pseg</span><br><span class="line"></span><br><span class="line">src_sentence = <span class="string">"我爱北京天安门"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">words</span> = pseg.cut(src_sentence)</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">word</span>, flag <span class="keyword">in</span> <span class="built_in">words</span>:</span><br><span class="line">    print(<span class="string">"%s %s"</span> % (<span class="built_in">word</span>, flag))</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel="jieba库的使用" href="cixingbiaozhu.png" title="词性标注结果图" data-fancybox="images"><img src="cixingbiaozhu.png" alt="词性标注结果图" title class></a>
+                <p>词性标注结果图</p>
+            </figure>
+<h4 id="并行分词"><a href="#并行分词" class="headerlink" title="并行分词"></a>并行分词</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用法：</span></span><br><span class="line">  <span class="keyword">jieba.enable_parallel(4) </span><span class="comment"># 开启并行模式，参数为并行进程数</span></span><br><span class="line">  <span class="keyword">jieba.disable_parallel() </span><span class="comment"># 关闭并行分词模式</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;原理： 文本按行分割后，分配到多个Python进程并行分词，最后归并结果。<br>&emsp;效果： 在4核3.4GHzLinux机器上，对金庸全集进行精确分词，获得了1MB/s的速度，是单进程版的3.3倍。<br>&emsp;注意： 并行分词仅支持默认分词器jieba.dt和jieba.posseg.dt。目前不支持Windows</p>
+<h4 id="返回词语在原文的起始位置"><a href="#返回词语在原文的起始位置" class="headerlink" title="返回词语在原文的起始位置"></a>返回词语在原文的起始位置</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"></span><br><span class="line">result = jieba.tokenize(<span class="string">"永和服装饰品有限公司"</span>)</span><br><span class="line"><span class="keyword">for</span> tk in result:</span><br><span class="line">    <span class="keyword">print</span>(<span class="string">"word %s\t\t start: %d \t\t end: %d"</span> % (tk[<span class="number">0</span>], tk[<span class="number">1</span>], tk[<span class="number">2</span>]))</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel="jieba库的使用" href="last.png" title="并行分词结果图" data-fancybox="images"><img src="last.png" alt="并行分词结果图" title class></a>
+                <p>并行分词结果图</p>
+            </figure>
+
           </div>
           
 <blockquote class="post-copyright">
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-04-08T12:51:03.765Z" itemprop="dateUpdated">2019-04-08 20:51:03</time>
+    最后更新时间：<time datetime="2019-04-08T15:22:13.496Z" itemprop="dateUpdated">2019-04-08 23:22:13</time>
 </span><br>
 
 
         
-        转载注明出处，原文地址：<a href="/2019/04/08/jieba/" target="_blank" rel="external">http://yoursite.com/2019/04/08/jieba/</a>
+        转载注明出处，原文地址：<a href="/2019/04/08/jieba/" target="_blank" rel="external">https://kernelylz.cn/2019/04/08/jieba/</a>
         
     </div>
     <footer>
-        <a href="http://yoursite.com">
+        <a href="https://kernelylz.cn">
             <img src="/img/avatar.jpg" alt="TheKernel">
             TheKernel
         </a>
@@ -284,7 +312,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/08/jieba/&title=《jieba库的使用》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/04/08/jieba/&title=《jieba库的使用》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -296,7 +324,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/08/jieba/&title=《jieba库的使用》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/04/08/jieba/&title=《jieba库的使用》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -335,6 +363,14 @@
 
       
       
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#jieba库是python中常用的中文分词库"><span class="post-toc-number">1.</span> <span class="post-toc-text">jieba库是python中常用的中文分词库</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法原理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">算法原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-分词"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1. 分词</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用方法"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">使用方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参数详解"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">参数详解</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#例子"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-添加用户自定义字典"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">2. 添加用户自定义字典</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#原理很简单-直接上代码"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">原理很简单, 直接上代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-关键字提取"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">3. 关键字提取</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用方法-1"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">使用方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参数详解-1"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">参数详解</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#例子-1"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">例子</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">扩展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#词性标注"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">词性标注</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#并行分词"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">并行分词</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#返回词语在原文的起始位置"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">返回词语在原文的起始位置</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </div></div></aside>
+    
   </article>
   
       <div id="reward" class="page-modal reward-lay">
@@ -430,7 +466,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/08/jieba/&title=《jieba库的使用》 — 尤梨洲&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/04/08/jieba/&title=《jieba库的使用》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -442,7 +478,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/08/jieba/&title=《jieba库的使用》 — 尤梨洲&source=小白的成长之路" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/04/08/jieba/&title=《jieba库的使用》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -454,7 +490,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByklEQVR42u3aMW7EMAwEQP//0w6QKo2dJXlmHGBcBXeRPLqCkJY6jvg5v5+rz39+e94+V6M+/ODi4o65+Qt6C7hfWG7AxcXd594Xr8J0F2Nz+i82XFzcl3HzxeSjcHFx/zs3L2TznwMXF/cN3DzIqJawJBZ55KyGi4s74FYD0yf+fjDfxcXFLXLP4nM/Kt/cNN+Oi4u7wu21SZJGaTJnsuk5elPj4uIOuPNSlcw2L3C4uLib3Mnhp9cmyWOUfHm4uLif5VbjzjzWzNuueaiKi4u7w02G9bYmOa56hQsXF3eTWy1VvYNNNTwdtVVwcXFb3Gr7pFqSPhWU4OLibnKTg0d+3arXIMmvbeHi4u5zJxen8nLWC0RwcXE3udWoNFl99T8LxREXF3eFO+nBVhfWa5Zc9n9wcXEf4/ZapNXNSvVCxuUbcXFxF7m9Jmu0Hcm7u3khw8XFXeFWr17N0XloUu784OLijrnVgjLf6NzPmX+Li4v7NLd3/SIfNQ9kj96LcXFxx9xJJDrf+ozyXVxc3D/lVsOOZFT50gYuLu6LuUkbJvkkb6vg4uLuc3vHmOpdj14U0oxFcHFxB9xqYFqdLjkI5WEKLi7uw9wv/P6VjEm+JbAAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxElEQVR42u3aO24DMQwFQN//0k5rwBDySInyFqPK2GCl2RQEP3q94vX+WKvn32v17mq3YwsXF3ebWz3y+3nOyvdffhIuLu5F7ipi7PxOwl9uwMXFfTI3P3gFre6Pi4v7fG4vSCVPcHFxn8ZNip+dlkr1X3CgVsPFxd3gnj2y93ukv4uLi9vivovrVIHUPB0XF/cKNw8oEyVN71xcXNyb3N4lifytPLkp12q4uLgD3FN1R1449RYuLu5NbjIayQcqpy5hLAMfLi7uMDchVtscSXqUB8RlFwcXF3eYW01H8uN3xjZR/wYXF3eA2xuN9C5tVP8atWZwcXHHuMn4c2fQ0vuMf2o1XFzcYe7O8dWUKP+MwjgWFxd3gFttXCZtlN5bUZqFi4t7kVu9clG91LWz/zIjw8XFHebmYSVPdJKAVR2+4uLi3ufuVE7VgJUEssKkBRcX9xD3XVxJwZPvUx7K4uLiXuHuXInIk5v8IleeBuHi4k5zqxcp8iPz8WohPcLFxb3IzSnVRkmhDqv2d3FxcR/M7Q1W8488HMhwcXF/xB1soeLi4l7kVlse1eKnd50LFxf3V9ze4HNnuzzR2erv4uLidrh/kyZxsP1Ynh0AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
