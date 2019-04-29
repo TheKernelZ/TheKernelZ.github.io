@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    
+    <title>NLPlibs | TheKernelZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.1">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"h2rrGcHNIQEpd1keqiqmIS0b-gzGzoHsz","app_key":"GRhabnxcoMF4nGGnPfXd4hQC","icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"TheKernelZ","repo":"gitment","oauth":{"client_id":"3ec85c605bb72f4ee36d","client_secret":"19d3326ada0de79692af1430b0706f01c7f96211"},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpeg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">TheKernel</h5>
+          <a href="mailto:837853431@qq.com" title="837853431@qq.com" class="mail">
+            
+              <span>8</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>4</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/TheKernelZ" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431" target="_blank">
+                  <i class="icon icon-lg icon-qq"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431@qq.com" target="_blank">
+                  <i class="icon icon-lg icon-facebook"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="bugaosuni" target="_blank">
+                  <i class="icon icon-lg icon-weibo"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="test" target="_blank">
+                  <i class="icon icon-lg icon-stack-overflow"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class>
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/custom">
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>NLPlibs</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpeg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">NLPlibs</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-29T07:15:16.000Z" itemprop="datePublished" class="page-time">
+  2019-04-29
+</time>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left">
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-NLPlibs" class="post-article article-type-post" itemprop="blogPost">
+      <div class="post-card">
+          <h1 class="post-card-title">NLPlibs</h1>
+          <div class="post-meta">
+              <time class="post-time" title="2019-04-29 15:15:16" datetime="2019-04-29T07:15:16.000Z" itemprop="datePublished">2019-04-29</time>
+
+              
+
+
+              
+
+              
+
+
+              
+          </div>
+          <div class="post-content" id="post-content" itemprop="postContent">
+              
+              <h2 id="中英文敏感词过滤"><a href="#中英文敏感词过滤" class="headerlink" title="中英文敏感词过滤"></a><a href="https://github.com/observerss/textfilter" target="_blank" rel="noopener">中英文敏感词过滤</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;f = DFAFilter()</span><br><span class="line">&gt;&gt;&gt;f.add(<span class="string">"sexy"</span>)</span><br><span class="line">&gt;&gt;&gt;f.filter(<span class="string">"hello sexy bavby"</span>)</span><br><span class="line">hello **** baby</span><br></pre></td></tr></table></figure>
+<h2 id="两种语言检测"><a href="#两种语言检测" class="headerlink" title="两种语言检测"></a>两种语言检测</h2><h3 id="Langid"><a href="#Langid" class="headerlink" title="Langid"></a><a href="https://github.com/saffsd/langid.py" target="_blank" rel="noopener">Langid</a></h3><p><font size="3" color="grey">pip install langid</font>(准确率高，效率低)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="keyword">import</span> langid</span><br><span class="line">&gt;&gt;&gt;langid.classify(<span class="string">"This is a test"</span>)</span><br><span class="line">(<span class="string">'en'</span>, <span class="number">-54.41310358047485</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Langdetect"><a href="#Langdetect" class="headerlink" title="Langdetect"></a><a href="https://code.google.com/archive/p/language-detection/" target="_blank" rel="noopener">Langdetect</a></h3><p><font size="3" color="grey">pip install langdetect</font>(准确率低，效率高)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langdetect <span class="keyword">import</span> detect</span><br><span class="line"><span class="keyword">from</span> langdetect <span class="keyword">import</span> detect_langs</span><br><span class="line"></span><br><span class="line">s1 = <span class="string">"本篇博客主要介绍两款语言探测工具，用于区分文本到底是什么语言，"</span></span><br><span class="line">s2 = <span class="string">'We are pleased to introduce today a new technology'</span></span><br><span class="line"></span><br><span class="line">print(detect(s1))</span><br><span class="line">print(detect(s2))</span><br><span class="line">print(detect_langs(s3))    <span class="comment"># 输出探测出的所有语言类型及其所占的比例</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="手机归属地查询"><a href="#手机归属地查询" class="headerlink" title="手机归属地查询"></a><a href="https://github.com/ls0f/phone" target="_blank" rel="noopener">手机归属地查询</a></h2><p><font size="3" color="grey">pip install phone</font>(支持号段: 13 ,15 ,18 ,14[5,7],17[0,6,7,8])<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> phone <span class="keyword">import</span> Phone</span><br><span class="line"></span><br><span class="line">p  = Phone()</span><br><span class="line">result = p.find(<span class="number">17342019665</span>)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure></p>
+<figure class="image-box">
+                <a rel="NLPlibs" href="phone.jpg" title data-fancybox="images"><img src="phone.jpg" alt title class></a>
+                <p></p>
+            </figure>
+<h2 id="依据名字判断性别"><a href="#依据名字判断性别" class="headerlink" title="依据名字判断性别"></a><a href="https://github.com/observerss/ngender" target="_blank" rel="noopener">依据名字判断性别</a></h2><p><font size="3" color="grey">pip install ngender</font><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ngender</span><br><span class="line"></span><br><span class="line">shenteng = ngender.guess(<span class="string">"沈腾"</span>)</span><br><span class="line">mayun = ngender.guess(<span class="string">"马云"</span>)</span><br><span class="line">fanbingbing = ngender.guess(<span class="string">"范冰冰"</span>)</span><br><span class="line"></span><br><span class="line">print(shenteng, mayun, fanbingbing)</span><br></pre></td></tr></table></figure></p>
+<figure class="image-box">
+                <a rel="NLPlibs" href="gender.jpg" title data-fancybox="images"><img src="gender.jpg" alt title class></a>
+                <p></p>
+            </figure>
+
+          </div>
+          
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-04-29T07:40:29.086Z" itemprop="dateUpdated">2019-04-29 15:40:29</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/04/29/NLPlibs/" target="_blank" rel="external">https://kernelylz.cn/2019/04/29/NLPlibs/</a>
+        
+    </div>
+    <footer>
+        <a href="https://kernelylz.cn">
+            <img src="/img/avatar.jpg" alt="TheKernel">
+            TheKernel
+        </a>
+    </footer>
+</blockquote>
+
+          
+              <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+              
+          
+          <div class="post-footer">
+              
+              <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/04/29/NLPlibs/&title=《NLPlibs》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/04/29/NLPlibs/&title=《NLPlibs》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+          </div>
+          
+              
+
+
+          
+      </div>
+      
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2019/04/08/jieba/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">jieba库的使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+      
+      
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#中英文敏感词过滤"><span class="post-toc-number">1.</span> <span class="post-toc-text">中英文敏感词过滤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#两种语言检测"><span class="post-toc-number">2.</span> <span class="post-toc-text">两种语言检测</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Langid"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Langid</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Langdetect"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Langdetect</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#手机归属地查询"><span class="post-toc-number">3.</span> <span class="post-toc-text">手机归属地查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#依据名字判断性别"><span class="post-toc-number">4.</span> <span class="post-toc-text">依据名字判断性别</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </div></div></aside>
+    
+  </article>
+  
+      <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+      
+  
+</div>
+
+        <footer class="footer">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kernelylz.cn" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.github.com/TheKernelZ" target="_blank">GITHUB</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                TheKernel &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/04/29/NLPlibs/&title=《NLPlibs》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/04/29/NLPlibs/&title=《NLPlibs》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABuklEQVR42u3aQXLDIAwF0Nz/0ukBMna/JCBu53nlSbB5eKFBEq9XfL2D63Nk/sviCxcXd8ytIlZBq+/HxcU9z72KGFf3eWD6/P3qDcmzuLi4z+TeP3W/gPtPgIuL+5+4q7Y+uLi4T+MmU+YhLGFtz9VwcXEH3LxKue9+S30XFxe3xX0Xr7zoeT+yOTsuLu4Rbh5Qkol7Eak8EhcXdzO3F55601fTp1++Ky4u7mZugqtua/JNT3NHhouLu407aZfmY5JPUCig4OLibuYmjZPelPkC8tIJLi7uGW41/egd1Oi1bQpNVlxc3KXcakCpgiZpUhR3cXFxN3B7yU/18NakdLIgV8PFxS1y563TpBiapD1R0oWLi3uEmwegJO3plVTKqRQuLu5Bbq9gOk+ByuNxcXG/xM3DSjnTGjdfcXFxv8Wdpy6rAl+5ToOLizvmNg9NDt5QTa5wcXHPcydHIiaHt/LGbXMxuLi4Y24edOYLyJu1UfKDi4u7mVtuacRLnTRuC3/j4uI+gNsri1SPa+Di4v4Vbp6obCmh4uLiHuTmxc21ZZTyB8LFxT3CrYaS+Uvzjc6ovouLi9vh/gAIpCn4Zs6FyQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.1"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.1"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.1"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
