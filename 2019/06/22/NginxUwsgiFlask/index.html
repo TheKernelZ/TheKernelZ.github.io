@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Nginx+uwsgi+Flask搭建后台系统(Ubuntu) | TheKernelZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Linux,Nginx,Flask,uwsgi,python">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.1">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"h2rrGcHNIQEpd1keqiqmIS0b-gzGzoHsz","app_key":"GRhabnxcoMF4nGGnPfXd4hQC","icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"TheKernelZ","repo":"gitment","oauth":null,"client_id":"3ec85c605bb72f4ee36d","client_secret":"19d3326ada0de79692af1430b0706f01c7f96211","perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpeg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">TheKernel</h5>
+          <a href="mailto:837853431@qq.com" title="837853431@qq.com" class="mail">
+            
+              <span>8</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>4</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/TheKernelZ" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431" target="_blank">
+                  <i class="icon icon-lg icon-qq"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431@qq.com" target="_blank">
+                  <i class="icon icon-lg icon-facebook"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="bugaosuni" target="_blank">
+                  <i class="icon icon-lg icon-weibo"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="test" target="_blank">
+                  <i class="icon icon-lg icon-stack-overflow"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class>
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/custom">
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Nginx+uwsgi+Flask搭建后台系统(Ubuntu)</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpeg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Nginx+uwsgi+Flask搭建后台系统(Ubuntu)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-22T04:04:56.000Z" itemprop="datePublished" class="page-time">
+  2019-06-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left">
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-NginxUwsgiFlask" class="post-article article-type-post" itemprop="blogPost">
+      <div class="post-card">
+          <h1 class="post-card-title">Nginx+uwsgi+Flask搭建后台系统(Ubuntu)</h1>
+          <div class="post-meta">
+              <time class="post-time" title="2019-06-22 12:04:56" datetime="2019-06-22T04:04:56.000Z" itemprop="datePublished">2019-06-22</time>
+
+              
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+              
+
+              
+
+
+              
+          </div>
+          <div class="post-content" id="post-content" itemprop="postContent">
+              
+              <h2 id="利用-Nginx-反向代理-负载均衡-运行-Flask网站"><a href="#利用-Nginx-反向代理-负载均衡-运行-Flask网站" class="headerlink" title="利用 Nginx 反向代理+负载均衡 运行 Flask网站"></a>利用 Nginx 反向代理+负载均衡 运行 Flask网站</h2><h3 id="1-安装pip3"><a href="#1-安装pip3" class="headerlink" title="1. 安装pip3"></a>1. 安装pip3</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu16.04及以上默认安装Python3，但是没有pip3</span></span><br><span class="line">sudo apt <span class="keyword">install</span> python3-pip</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装Flask与uwsgi"><a href="#2-安装Flask与uwsgi" class="headerlink" title="2.安装Flask与uwsgi"></a>2.安装Flask与uwsgi</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip3 install flask</span><br><span class="line"># 安装完可以在PythonConsole中使用<span class="keyword">from</span> flask <span class="keyword">import</span> Flask进行测试</span><br><span class="line">pip3 install uwsgi</span><br><span class="line"># Nginx 需要使用 uwsgi 托管 Python</span><br></pre></td></tr></table></figure>
+<h3 id="3-Nginx安装与运行"><a href="#3-Nginx安装与运行" class="headerlink" title="3.Nginx安装与运行"></a>3.Nginx安装与运行</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">install</span> nginx  <span class="comment"># 安装</span></span><br><span class="line">sudo /etc/init.d/nginx <span class="keyword">start</span>  <span class="comment"># 运行</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-安装virtualenv-可以跳过，建议不跳"><a href="#4-安装virtualenv-可以跳过，建议不跳" class="headerlink" title="4.安装virtualenv(可以跳过，建议不跳)"></a>4.安装virtualenv(可以跳过，建议不跳)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 虚拟环境可以隔离不同的Python运行环境(每个项目有自己的依赖环境，避免冲突)</span></span><br><span class="line">pip3 <span class="keyword">install</span> virtualenv</span><br><span class="line">cd /<span class="keyword">var</span>/www/<span class="keyword">test</span>  <span class="comment"># 在此目录下进行测试(可以改为自己的目录)</span></span><br><span class="line">virtualenv venv  <span class="comment"># 创建虚拟环境</span></span><br><span class="line"><span class="keyword">source</span> venv/<span class="keyword">bin</span>/<span class="keyword">activate</span>  <span class="comment"># 运行虚拟环境(通过 deactivate 可以退出虚拟环境)</span></span><br><span class="line"><span class="comment"># 命令行前有了(venv)则表示运行成功</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-测试代码-Flask入门程序"><a href="#5-测试代码-Flask入门程序" class="headerlink" title="5.测试代码(Flask入门程序)"></a>5.测试代码(Flask入门程序)</h3><p><code>cd /var/www/test</code><br><code>vim hello.py</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    	    <span class="keyword">return</span> <span class="string">"Hello World!"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  	    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">5000</span>)</span><br><span class="line"><span class="comment"># 可以通过 python3 hello.py 进行测试</span></span><br><span class="line"><span class="comment"># 访问http://localhost:5000</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="6-配置Nginx-重点"><a href="#6-配置Nginx-重点" class="headerlink" title="6.配置Nginx(重点!!!)"></a>6.配置Nginx(重点!!!)</h3><h4 id="删除Nginx的默认配置文件"><a href="#删除Nginx的默认配置文件" class="headerlink" title="删除Nginx的默认配置文件"></a>删除Nginx的默认配置文件</h4><p><code>sudo rm /etc/nginx/sites-enabled/default</code></p>
+<h4 id="创建项目的配置文件"><a href="#创建项目的配置文件" class="headerlink" title="创建项目的配置文件"></a>创建项目的配置文件</h4><p><code>vim /etc/nginx/sites-enabled/test_nginx.conf</code><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> localhost;</span><br><span class="line">    <span class="attribute">charset</span>     utf-<span class="number">8</span>;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">75M</span>;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">	<span class="attribute">include</span> uwsgi_params;</span><br><span class="line">	<span class="attribute">uwsgi_pass</span> unix:/var/www/test/test_uwsgi.sock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="链接配置文件到-Nginx-配置文件夹并重启-Nginx"><a href="#链接配置文件到-Nginx-配置文件夹并重启-Nginx" class="headerlink" title="链接配置文件到 Nginx 配置文件夹并重启 Nginx"></a>链接配置文件到 Nginx 配置文件夹并重启 Nginx</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s <span class="regexp">/etc/</span>nginx<span class="regexp">/sites-enabled/</span>test_nginx.conf <span class="regexp">/etc/</span>nginx<span class="regexp">/conf.d/</span></span><br><span class="line">sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/nginx restart</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-配置uwsgi-重点-1"><a href="#7-配置uwsgi-重点-1" class="headerlink" title="7.配置uwsgi(重点+1)"></a>7.配置uwsgi(重点+1)</h3><h4 id="创建-uwsgi-配置文件-文件内容如下"><a href="#创建-uwsgi-配置文件-文件内容如下" class="headerlink" title="创建 uwsgi 配置文件(文件内容如下)"></a>创建 uwsgi 配置文件(文件内容如下)</h4><p><code>vim /var/www/test/test_uwsgi.conf</code><br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[uwsgi]</span></span><br><span class="line"><span class="comment">#application's base folder</span></span><br><span class="line"><span class="attr">base</span> = /var/www/test</span><br><span class="line"><span class="comment">#python module to import</span></span><br><span class="line"><span class="attr">app</span> = hello</span><br><span class="line"><span class="attr">module</span> = %(app)</span><br><span class="line"><span class="attr">home</span> = %(base)/venv</span><br><span class="line"><span class="attr">pythonpath</span> = %(base)</span><br><span class="line"><span class="comment">#socket file's location</span></span><br><span class="line"><span class="attr">socket</span> = /var/www/test/%n.sock</span><br><span class="line"><span class="comment">#permissions for the socket file</span></span><br><span class="line"><span class="attr">chmod-socket</span> = <span class="number">666</span></span><br><span class="line"><span class="comment">#the variable that holds a flask application inside the module imported at line #6</span></span><br><span class="line"><span class="attr">callable</span> = app</span><br><span class="line"><span class="comment">#location of log files</span></span><br><span class="line"><span class="attr">logto</span> = /var/log/uwsgi/%n.log</span><br></pre></td></tr></table></figure></p>
+<h4 id="创建-Log-日志文件"><a href="#创建-Log-日志文件" class="headerlink" title="创建 Log 日志文件"></a>创建 Log 日志文件</h4><p><code>sudo mkdir -p /var/log/uwsgi</code></p>
+<h4 id="启动程序"><a href="#启动程序" class="headerlink" title="启动程序"></a>启动程序</h4><p><code>uwsgi --ini website_uwsgi.ini</code></p>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以直接在公网上进行访问</span><br><span class="line">端口号改为了<span class="number">80</span>(test_nginx.conf下的<span class="section">listen</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="以下为额外内容"><a href="#以下为额外内容" class="headerlink" title="以下为额外内容"></a>以下为额外内容</h2><h3 id="8-配置supervisor-进程管理"><a href="#8-配置supervisor-进程管理" class="headerlink" title="8.配置supervisor(进程管理)"></a>8.配置supervisor(进程管理)</h3><p>用于进程卡死后自动重启，防止后台进程卡死后数据丢失等</p>
+<h4 id="1-安装配置"><a href="#1-安装配置" class="headerlink" title="1.安装配置"></a>1.安装配置</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install supervisor(pip3不推荐啊)</span><br><span class="line"># 创建 <span class="keyword">Log</span> 文件</span><br><span class="line">touch /<span class="keyword">var</span>/<span class="keyword">log</span>/supervisor/testLogs/test_supervisor.<span class="built_in">log</span></span><br><span class="line">touch /<span class="keyword">var</span>/<span class="keyword">log</span>/supervisor/testLogs/test_supervisor_err.<span class="built_in">log</span></span><br><span class="line"># 创建配置文件</span><br><span class="line">touch /etc/supervisor/<span class="keyword">conf</span>.<span class="keyword">d</span>/<span class="keyword">test</span>.<span class="keyword">conf</span>(内容如下)</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[program:test]</span></span><br><span class="line"><span class="attr">command</span>=uwsgi --ini /var/www/test/test_uwsgi.ini                               </span><br><span class="line"><span class="attr">stopsignal</span>=QUIT</span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span>                                                                        </span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">true</span>                                                                       </span><br><span class="line"><span class="attr">stdout_logfile</span>=/var/log/supervisor/testLogs/test_supervisor.log                 </span><br><span class="line"><span class="attr">stderr_logfile</span>=/var/log/supervisor/testLogs/test_supervisor_err.log</span><br></pre></td></tr></table></figure>
+<h4 id="2-运行supervisor监控进程"><a href="#2-运行supervisor监控进程" class="headerlink" title="2.运行supervisor监控进程"></a>2.运行supervisor监控进程</h4><p><code>cd /etc/supervisor</code><br><code>sudo supervisord -c supervisord.conf</code><br>如果遇到: <code>Error: Another program is already listening on a port that one of our HTTP servers is configured to use. Shut this program down first before starting supervisord</code><br>执行: <code>sudo unlink /var/run/supervisor.sock</code><br>运行: <code>supervisorctl -c supervisord.conf reload</code></p>
+<h4 id="3-supervisor使用方法"><a href="#3-supervisor使用方法" class="headerlink" title="3.supervisor使用方法"></a>3.supervisor使用方法</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># program_name即在test.conf第一行的名字</span></span><br><span class="line">supervisorctl status  <span class="comment"># 查看状态</span></span><br><span class="line">supervisorctl <span class="literal">stop</span> program_name  <span class="comment"># 停止</span></span><br><span class="line">supervisorctl <span class="literal">start</span>  program_name  <span class="comment"># 开始</span></span><br></pre></td></tr></table></figure>
+
+          </div>
+          
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-06-22T04:53:49.477Z" itemprop="dateUpdated">2019-06-22 12:53:49</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/06/22/NginxUwsgiFlask/" target="_blank" rel="external">https://kernelylz.cn/2019/06/22/NginxUwsgiFlask/</a>
+        
+    </div>
+    <footer>
+        <a href="https://kernelylz.cn">
+            <img src="/img/avatar.jpg" alt="TheKernel">
+            TheKernel
+        </a>
+    </footer>
+</blockquote>
+
+          
+              <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+              
+          
+          <div class="post-footer">
+              
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flask/">Flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uwsgi/">uwsgi</a></li></ul>
+
+              <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/06/22/NginxUwsgiFlask/&title=《Nginx+uwsgi+Flask搭建后台系统(Ubuntu)》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/06/22/NginxUwsgiFlask/&title=《Nginx+uwsgi+Flask搭建后台系统(Ubuntu)》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+          </div>
+          
+              
+
+
+          
+      </div>
+      
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2019/06/21/GitLab/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">GitLab详细搭建过程(rpm)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+      
+      
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#利用-Nginx-反向代理-负载均衡-运行-Flask网站"><span class="post-toc-number">1.</span> <span class="post-toc-text">利用 Nginx 反向代理+负载均衡 运行 Flask网站</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-安装pip3"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1. 安装pip3</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-安装Flask与uwsgi"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.安装Flask与uwsgi</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Nginx安装与运行"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3.Nginx安装与运行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-安装virtualenv-可以跳过，建议不跳"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">4.安装virtualenv(可以跳过，建议不跳)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-测试代码-Flask入门程序"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">5.测试代码(Flask入门程序)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-配置Nginx-重点"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">6.配置Nginx(重点!!!)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#删除Nginx的默认配置文件"><span class="post-toc-number">1.6.1.</span> <span class="post-toc-text">删除Nginx的默认配置文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建项目的配置文件"><span class="post-toc-number">1.6.2.</span> <span class="post-toc-text">创建项目的配置文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#链接配置文件到-Nginx-配置文件夹并重启-Nginx"><span class="post-toc-number">1.6.3.</span> <span class="post-toc-text">链接配置文件到 Nginx 配置文件夹并重启 Nginx</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7-配置uwsgi-重点-1"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">7.配置uwsgi(重点+1)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建-uwsgi-配置文件-文件内容如下"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">创建 uwsgi 配置文件(文件内容如下)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建-Log-日志文件"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">创建 Log 日志文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#启动程序"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">启动程序</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Tips"><span class="post-toc-number">1.7.4.</span> <span class="post-toc-text">Tips</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#以下为额外内容"><span class="post-toc-number">2.</span> <span class="post-toc-text">以下为额外内容</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-配置supervisor-进程管理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">8.配置supervisor(进程管理)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-安装配置"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">1.安装配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-运行supervisor监控进程"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">2.运行supervisor监控进程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-supervisor使用方法"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">3.supervisor使用方法</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </div></div></aside>
+    
+  </article>
+  
+      <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+      
+  
+</div>
+
+        <footer class="footer">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kernelylz.cn" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.github.com/TheKernelZ" target="_blank">GITHUB</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.chinazkk.cn" target="_blank">ZKK BLOG</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                TheKernel &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/06/22/NginxUwsgiFlask/&title=《Nginx+uwsgi+Flask搭建后台系统(Ubuntu)》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/06/22/NginxUwsgiFlask/&title=《Nginx+uwsgi+Flask搭建后台系统(Ubuntu)》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aS07EQAwFwLn/pYPEDkHCs51BpLt6FUF+lYXHdvv1itfxuc7+cvbfs3Ouj7/f7baFgYHxWMZxua4fdnZm79r8/B+oGBgYGzCug+xRXEkwza9KfgAwMDAwJo/PAysGBgbGXQH3Oq1Mwmv1k2FgYGDkSd68uJ0/94ZaHAMD44GM6sbAXx6/cX8DAwPjIYxeE63aSqsmi+W3wsDAWJqRDFJURy7mzbV8Q7TwchgYGI9l5EXmXcVn8pmSz3oaajEwMJZj5GOj1VBYTQTz8vWX3w0MDIxFGfNUr4qfhFcMDIzdGPkwRA6rNtTyT4CBgYExP06GISYp42n4xsDAWJqRh9TeVsGkPVdNOjEwMFZlTIrMaqOtOnxWeAcMDIxtGNWRi/n587EPDAyMHRi9ptg8pXvFq7BJgIGBsTSjnIoVm/vJHeZbmxgYGPsw8g3L+VZBdYysWR5jYGA8nNFL6fLmfq/RXw3lGBgYazPuaq71Rit6W5vRHiwGBsZCjGQzMk8Wq9cm+OgqDAyMDRjV5K/aLKs27/K7fSliMTAwFmXkL50Un8lV1eK2ELIxMDAWZRzFlTfjkuK2N8CBgYGxG6M3ntVLHKulcr7NiYGBsQMjb9DnI1nXj793yAMDA2MfRi/ITtLEHg8DAwOjtyU5D7LVxh8GBgZGb4ahOpaRDG3kySsGBsYOjKSIvatN/5arMDAwlmZMCsj8ptUwnfwY3LC/gYGB8d8ZH9mT0T8S/owhAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.1"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.1"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.1"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
