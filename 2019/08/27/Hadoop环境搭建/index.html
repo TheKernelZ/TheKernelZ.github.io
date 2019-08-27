@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Hadoop环境搭建 | TheKernelZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="大数据,分布式,Hadoop">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.1">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"h2rrGcHNIQEpd1keqiqmIS0b-gzGzoHsz","app_key":"GRhabnxcoMF4nGGnPfXd4hQC","icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"TheKernelZ","repo":"gitment","oauth":null,"client_id":"3ec85c605bb72f4ee36d","client_secret":"19d3326ada0de79692af1430b0706f01c7f96211","perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpeg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">TheKernel</h5>
+          <a href="mailto:837853431@qq.com" title="837853431@qq.com" class="mail">
+            
+              <span>8</span>
+            
+              <span>3</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>5</span>
+            
+              <span>3</span>
+            
+              <span>4</span>
+            
+              <span>3</span>
+            
+              <span>1</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/TheKernelZ" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431" target="_blank">
+                  <i class="icon icon-lg icon-qq"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="837853431@qq.com" target="_blank">
+                  <i class="icon icon-lg icon-facebook"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="bugaosuni" target="_blank">
+                  <i class="icon icon-lg icon-weibo"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="test" target="_blank">
+                  <i class="icon icon-lg icon-stack-overflow"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class>
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class>
+              <a href="/custom">
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Hadoop环境搭建</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpeg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">Hadoop环境搭建</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-27T11:33:03.000Z" itemprop="datePublished" class="page-time">
+  2019-08-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/大数据/">大数据</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left">
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Hadoop环境搭建" class="post-article article-type-post" itemprop="blogPost">
+      <div class="post-card">
+          <h1 class="post-card-title">Hadoop环境搭建</h1>
+          <div class="post-meta">
+              <time class="post-time" title="2019-08-27 19:33:03" datetime="2019-08-27T11:33:03.000Z" itemprop="datePublished">2019-08-27</time>
+
+              
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/大数据/">大数据</a></li></ul>
+
+
+
+              
+
+              
+
+
+              
+          </div>
+          <div class="post-content" id="post-content" itemprop="postContent">
+              
+              <h2 id="大数据入门-分布式架构Hadoop环境搭建"><a href="#大数据入门-分布式架构Hadoop环境搭建" class="headerlink" title="大数据入门(分布式架构Hadoop环境搭建)"></a>大数据入门(分布式架构Hadoop环境搭建)</h2><h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">系统: <span class="selector-tag">CentOS</span> 7 64位</span><br><span class="line"><span class="selector-tag">JDK</span>版本: <span class="selector-tag">jdk-8u212-linux-x64</span></span><br><span class="line"><span class="selector-tag">Hadoop</span>版本: <span class="selector-tag">hadoop-2</span><span class="selector-class">.6</span><span class="selector-class">.0-cdh5</span><span class="selector-class">.15</span><span class="selector-class">.1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="系统基础环境搭建"><a href="#系统基础环境搭建" class="headerlink" title="系统基础环境搭建"></a>系统基础环境搭建</h3><p>保证虚拟机能联网(尝试ping 主机或<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>)</p>
+<h4 id="安装JDK-已安装的直接下一步"><a href="#安装JDK-已安装的直接下一步" class="headerlink" title="安装JDK(已安装的直接下一步)"></a>安装JDK(已安装的直接下一步)</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载OpenJDK(CentOS 7 默认安装了 openJDK，通过 java -version可以测试一下)</span></span><br><span class="line">yum -y remove java</span><br><span class="line"><span class="comment"># 这里我发现 jdk8 好像必须要登录才能下载了, 在这个仓库中可以免费下载</span></span><br><span class="line">http:<span class="string">//www.github.com/frekele/oracle-java/releases</span></span><br><span class="line"><span class="comment"># 将 jdk 移动到虚拟机中(mac/linux, win中可以直接使用vmtools拉入)</span></span><br><span class="line">scp jdk文件 CentOS用户名@虚拟机ip地址:需要移动到的路径</span><br><span class="line">例如: scp jdk-8u212-linux-x64.tar.gz thekernel@192.168.110.140:~<span class="string">/my_hadoop</span> </span><br><span class="line"><span class="comment"># 解压 jdk 文件(-C 用于指定解压到的目录)</span></span><br><span class="line">tar -zxvf jdk-8u212-linux-x64.tar.gz -C <span class="string">/home/hadoop/app</span></span><br><span class="line"><span class="comment"># 添加环境变量 </span></span><br><span class="line">vim ~<span class="string">/.bash_profile</span></span><br><span class="line">在export $PATH前加入<span class="params">----------------------------------------------------------</span></span><br><span class="line">	export JAVA_HOME=<span class="string">/home/hadoop/app/jdk1.8.0_212</span></span><br><span class="line">	export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line"><span class="params">--------------------------------------------------------------------------</span></span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel="Hadoop环境搭建" href="bash_profile.png" title="bash_profile图片" data-fancybox="images"><img src="bash_profile.png" alt="bash_profile图片" title class></a>
+                <p>bash_profile图片</p>
+            </figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 更新系统环境变量</span></span><br><span class="line">source ~/.bash_profile</span><br><span class="line"><span class="meta"># 测试 jdk(注意看第二行后面显示的，我这里是212)</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel="Hadoop环境搭建" href="java-version.png" title="java_version图片" data-fancybox="images"><img src="java-version.png" alt="java_version图片" title class></a>
+                <p>java_version图片</p>
+            </figure>
+
+<h4 id="设置-ssh-无密码登录-以后在主从服务器调用时非常重要"><a href="#设置-ssh-无密码登录-以后在主从服务器调用时非常重要" class="headerlink" title="设置 ssh 无密码登录(以后在主从服务器调用时非常重要)"></a>设置 ssh 无密码登录(以后在主从服务器调用时非常重要)</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试 ssh</span></span><br><span class="line">首先通过 ssh 用户名@ip地址 进行测试(这时是需要输入密码的)</span><br><span class="line">在~目录下运行 ssh-keygen -t rsa (选项全部默认回车)</span><br><span class="line"><span class="comment"># 看到 .ssh文件加下有 id_rsa, id_rsa.pub 则成功</span></span><br><span class="line">cat id_rsa.pub <span class="meta">&gt;&gt; </span>authorized_keys</span><br><span class="line"><span class="comment"># 建议将 authorized_keys 目录的权限修改为只能当前用户读写</span></span><br><span class="line">chmod <span class="number">600</span> authorized_keys</span><br><span class="line"><span class="comment"># 再次测试 ssh</span></span><br><span class="line">ssh 用户名@ip地址(这时是不需要输入密码的)</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 解压 hadoop 文件</span><br><span class="line">tar -zxvf hadoop<span class="number">-2.6</span><span class="number">.0</span>-cdh5<span class="number">.15</span><span class="number">.1</span>.tar.gz -C /home/hadoop/app</span><br><span class="line"># 配置 hadoop-envs</span><br><span class="line">cd /home/hadoop/app/hadoop<span class="number">-2.6</span><span class="number">.0</span>-cdh5<span class="number">.15</span><span class="number">.1</span>/etc/hadoop</span><br><span class="line">vim hadoop-envs.sh</span><br><span class="line"># 将其中的 JAVA_HOME改为自己的java路径(保险起见)</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置Hadoop及HDFS"><a href="#配置Hadoop及HDFS" class="headerlink" title="配置Hadoop及HDFS"></a>配置Hadoop及HDFS</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 在hadoop目录下执行(hadoop-2.6.0-cdh5.15.1)</span></span><br><span class="line"><span class="meta"># 配置 Hadoop</span></span><br><span class="line">vim etc<span class="meta-keyword">/hadoop/</span>core-site.xml</span><br><span class="line">在configuration标签中加入----------------------------------</span><br><span class="line">	<span class="params">&lt;property&gt;</span></span><br><span class="line">	    <span class="params">&lt;name&gt;</span>fs.defaultFS<span class="params">&lt;/name&gt;</span></span><br><span class="line">	    <span class="params">&lt;value&gt;</span>hdfs:<span class="comment">//localhost:8020&lt;/value&gt;</span></span><br><span class="line">	<span class="params">&lt;/property&gt;</span></span><br><span class="line">	<span class="params">&lt;property&gt;</span></span><br><span class="line">	    <span class="params">&lt;name&gt;</span>hadoop.tmp.dir<span class="params">&lt;/name&gt;</span></span><br><span class="line">	    <span class="params">&lt;value&gt;</span><span class="meta-keyword">/home/</span>hadoop<span class="meta-keyword">/app/</span>tmp<span class="params">&lt;/value&gt;</span>  <span class="meta"># 文件夹目录可以自行更改</span></span><br><span class="line">	<span class="params">&lt;/property&gt;</span></span><br><span class="line">-----------------------------------------------------------</span><br><span class="line"><span class="meta"># 配置 HDFS</span></span><br><span class="line">vim etc<span class="meta-keyword">/hadoop/</span>hdfs-site.xml</span><br><span class="line">在configuration标签中加入----------------------------------</span><br><span class="line">	<span class="params">&lt;property&gt;</span></span><br><span class="line">	    <span class="params">&lt;name&gt;</span>dfs.replication<span class="params">&lt;/name&gt;</span></span><br><span class="line">	    <span class="params">&lt;value&gt;</span><span class="number">1</span><span class="params">&lt;/value&gt;</span></span><br><span class="line">	<span class="params">&lt;/property&gt;</span></span><br><span class="line">-----------------------------------------------------------</span><br><span class="line"><span class="meta"># 首次启动 HDFS (第一次必须format namenode)</span></span><br><span class="line">hdfs namenode -format</span><br><span class="line"><span class="meta"># 在 INFO 中会看到 successfuilly formatted 表明成功</span></span><br><span class="line"><span class="meta"># 若失败，在提示中会有明显的错误(一般是xml粗心写错)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-HDFS"><a href="#查看-HDFS" class="headerlink" title="查看 HDFS"></a>查看 HDFS</h4><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">通过 jps 命令查看 Jps 是否启动</span><br><span class="line"><span class="meta"># 通过主机或其他同网段的机器访问</span></span><br><span class="line">网页访问 ip:<span class="number">50070</span></span><br><span class="line"><span class="meta"># 不能访问一般是防火墙问题</span></span><br><span class="line"><span class="meta"># 查看防火墙状态(root下)</span></span><br><span class="line">firewall-cmd --state 	</span><br><span class="line">出现 `running` 则表明是防火墙问题</span><br><span class="line"><span class="meta"># 关闭防火墙</span></span><br><span class="line">systemctl stop firewalld.service</span><br><span class="line">此时访问 ip:<span class="number">50070</span> 即可看到如下情景</span><br></pre></td></tr></table></figure>
+
+<figure class="image-box">
+                <a rel="Hadoop环境搭建" href="HDFS.png" title="HDSF图片" data-fancybox="images"><img src="HDFS.png" alt="HDSF图片" title class></a>
+                <p>HDSF图片</p>
+            </figure>
+
+          </div>
+          
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-27T12:35:23.722Z" itemprop="dateUpdated">2019-08-27 20:35:23</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/08/27/Hadoop环境搭建/" target="_blank" rel="external">https://kernelylz.cn/2019/08/27/Hadoop环境搭建/</a>
+        
+    </div>
+    <footer>
+        <a href="https://kernelylz.cn">
+            <img src="/img/avatar.jpg" alt="TheKernel">
+            TheKernel
+        </a>
+    </footer>
+</blockquote>
+
+          
+              <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+              
+          
+          <div class="post-footer">
+              
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+              <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/08/27/Hadoop环境搭建/&title=《Hadoop环境搭建》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/08/27/Hadoop环境搭建/&title=《Hadoop环境搭建》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+          </div>
+          
+              
+
+
+          
+      </div>
+      
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2019/07/19/Nessus入门/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Nessus 入门</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+      
+      
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#大数据入门-分布式架构Hadoop环境搭建"><span class="post-toc-number">1.</span> <span class="post-toc-text">大数据入门(分布式架构Hadoop环境搭建)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#环境介绍"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">环境介绍</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统基础环境搭建"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">系统基础环境搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安装JDK-已安装的直接下一步"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">安装JDK(已安装的直接下一步)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#设置-ssh-无密码登录-以后在主从服务器调用时非常重要"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">设置 ssh 无密码登录(以后在主从服务器调用时非常重要)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安装Hadoop"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">安装Hadoop</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#配置Hadoop及HDFS"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">配置Hadoop及HDFS</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查看-HDFS"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">查看 HDFS</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </div></div></aside>
+    
+  </article>
+  
+      <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        手奉苹蘩喜盛门，心知礼义感君恩。
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+      
+  
+</div>
+
+        <footer class="footer">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.kernelylz.cn" target="_blank">HOME</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.github.com/TheKernelZ" target="_blank">GITHUB</a>
+    </span>
+    
+    <span class="blogroll-item">
+        <a href="https://www.chinazkk.cn" target="_blank">ZKK BLOG</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                TheKernel &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://kernelylz.cn/2019/08/27/Hadoop环境搭建/&title=《Hadoop环境搭建》 — TheKernelZ&pic=https://kernelylz.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kernelylz.cn/2019/08/27/Hadoop环境搭建/&title=《Hadoop环境搭建》 — TheKernelZ&source=小白的成长之路" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aQXKDMAwF0Nz/0um2M03gf5u0xX5eMYQEHgtFlvR4xOv5Zv38NL/+3fH3MxcvDAyM2zKeh+v4BmPXHH83eR0vqBgYGBsw3kWw4+PjgJvw8tB88swYGBgYh2G0DY5JWomBgYFxbcBNzifB9I//NzAwMP49o03R2oduv/vBvTgGBsYNGXnV/fePP9LfwMDAuBXjWa6rUsCZzfCLu2BgYCzNyAPcWPmsTQHHngcDA2MHRluyb4NvW7DLmxBFJouBgXFbxkw6mJS92sGvtklQZLgYGBg3ZyTFr08keVe1HzAwMHZj5EX5ZCubNybz7PVkF46BgbE0Y6ZwNrYNTpLFKHxjYGBsyUgSvjwdHEv+8gQRAwNjbUYSZNuCWluSm0lDMTAwdmC0Lcmp7uh0oe1kIAwDA2NRxszNnkMr+f2WhIGBsQOj3bjmYxkzAb0O+hgYGIsy2kGKsWQxD6xtilk8KAYGxm0ZefmsDaztmMVYmwEDA2MfRj4e0QblFtO+IAwMjN0Y+RDY/GhX/lKK4IuBgbEBo+0kzATNseA7mNViYGAsxxgbdBgbJksaBsVdMDAwFmWMjUrMnGnbFVGaiIGBsTRjrNnZls/ya/ImQfI7GBgYKzHGhr3a/WM+VJGDi1ogBgbGEoyrBi/GRjHaxPGkMYCBgYFRtgSuGtE4CeUYGBgY5Za1TQHzRLPob2BgYCzHaAtq+Xb3E8MWGBgYuzHGto55M2CsSTlzPQYGxkKMLykDk2Ft2LbUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.1"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.1"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.1"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.1"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
